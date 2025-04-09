@@ -1,47 +1,17 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ChevronRight, Search, Gavel, CreditCard, Award, Bell, ShieldCheck, Clock } from "lucide-react"
+import { ChevronRight, Search, Gavel, CreditCard, Award, Bell, ShieldCheck, Clock } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import SiteHeader from "@/components/site-header"
+import SiteFooter from "@/components/site-footer"
 
 export default function HowItWorksPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="border-b">
-        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight">ezyauction.tt</span>
-          </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link href="/categories" className="text-sm font-medium hover:underline underline-offset-4">
-              Categories
-            </Link>
-            <Link href="/listings" className="text-sm font-medium hover:underline underline-offset-4">
-              Browse Listings
-            </Link>
-            <Link href="/how-it-works" className="text-sm font-medium text-emerald-600 underline underline-offset-4">
-              How It Works
-            </Link>
-            <Link href="/about" className="text-sm font-medium hover:underline underline-offset-4">
-              About Us
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/auth/login">
-              <Button variant="ghost" size="sm">
-                Log in
-              </Button>
-            </Link>
-            <Link href="/auth/signup">
-              <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700">
-                Sign up
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-emerald-50 to-white">
@@ -399,62 +369,7 @@ export default function HowItWorksPage() {
         </section>
       </main>
 
-      <footer className="border-t bg-gray-50">
-        <div className="container flex flex-col gap-4 py-10 md:flex-row md:gap-8 px-4 md:px-6">
-          <div className="flex-1 space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold">ezyauction.tt</span>
-            </div>
-            <p className="text-sm text-gray-500">
-              Trinidad & Tobago's premier online auction platform. Buy and sell with confidence.
-            </p>
-          </div>
-          <div className="flex-1 space-y-4">
-            <div className="text-sm font-medium">Company</div>
-            <ul className="grid gap-2 text-sm text-gray-500">
-              <li>
-                <Link href="/about" className="hover:underline">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers" className="hover:underline">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:underline">
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="flex-1 space-y-4">
-            <div className="text-sm font-medium">Help</div>
-            <ul className="grid gap-2 text-sm text-gray-500">
-              <li>
-                <Link href="/faq" className="hover:underline">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:underline">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="hover:underline">
-                  Privacy Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="border-t py-6 text-center text-sm text-gray-500">
-          <div className="container px-4 md:px-6">© 2024 ezyauction.tt. All rights reserved.</div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
-

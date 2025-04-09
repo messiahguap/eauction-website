@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Facebook, Instagram, Heart } from 'lucide-react'
-import { InstagramIcon as Tiktok } from 'lucide-react'
+import { Facebook, Instagram, Heart } from "lucide-react"
+import { InstagramIcon as Tiktok } from "lucide-react"
 
 export default function SiteFooter() {
   return (
@@ -33,7 +33,7 @@ export default function SiteFooter() {
               </Link>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="text-sm font-medium">Quick Links</div>
             <ul className="grid gap-2 text-sm text-gray-500">
@@ -54,7 +54,7 @@ export default function SiteFooter() {
               </li>
             </ul>
           </div>
-          
+
           <div className="space-y-4">
             <div className="text-sm font-medium">Company</div>
             <ul className="grid gap-2 text-sm text-gray-500">
@@ -75,7 +75,7 @@ export default function SiteFooter() {
               </li>
             </ul>
           </div>
-          
+
           <div className="space-y-4">
             <div className="text-sm font-medium">Help</div>
             <ul className="grid gap-2 text-sm text-gray-500">
@@ -98,7 +98,7 @@ export default function SiteFooter() {
           </div>
         </div>
       </div>
-      
+
       <div className="border-t py-6 bg-gray-100">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col sm:flex-row justify-between items-center">
@@ -115,4 +115,3 @@ export default function SiteFooter() {
     </footer>
   )
 }
-

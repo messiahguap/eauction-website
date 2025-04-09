@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Bell, Check, X, MessageSquare, DollarSign, Clock, AlertCircle, Info } from 'lucide-react'
+import { Bell, Check, X, MessageSquare, DollarSign, Clock, AlertCircle, Info } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -71,7 +71,7 @@ export default function NotificationsPopover({ notificationCount = 0 }: Notifica
 
   useEffect(() => {
     // Check if there are any notifications in localStorage
-    const storedNotifications = localStorage.getItem('notifications')
+    const storedNotifications = localStorage.getItem("notifications")
     if (storedNotifications) {
       try {
         setNotifications(JSON.parse(storedNotifications))
@@ -90,20 +90,20 @@ export default function NotificationsPopover({ notificationCount = 0 }: Notifica
   const markAllAsRead = () => {
     const updatedNotifications = notifications.map((n) => ({ ...n, read: true }))
     setNotifications(updatedNotifications)
-    localStorage.setItem('notifications', JSON.stringify(updatedNotifications))
+    localStorage.setItem("notifications", JSON.stringify(updatedNotifications))
     setMarkAllAsReadDialog(false)
   }
 
   const markAsRead = (id: string) => {
     const updatedNotifications = notifications.map((n) => (n.id === id ? { ...n, read: true } : n))
     setNotifications(updatedNotifications)
-    localStorage.setItem('notifications', JSON.stringify(updatedNotifications))
+    localStorage.setItem("notifications", JSON.stringify(updatedNotifications))
   }
 
   const deleteNotification = (id: string) => {
     const updatedNotifications = notifications.filter((n) => n.id !== id)
     setNotifications(updatedNotifications)
-    localStorage.setItem('notifications', JSON.stringify(updatedNotifications))
+    localStorage.setItem("notifications", JSON.stringify(updatedNotifications))
   }
 
   const getNotificationIcon = (type: string) => {
@@ -227,4 +227,3 @@ export default function NotificationsPopover({ notificationCount = 0 }: Notifica
     </>
   )
 }
-

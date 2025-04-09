@@ -56,5 +56,31 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1 {
+    @apply text-3xl font-bold md:text-4xl;
+  }
+  h2 {
+    @apply text-2xl font-bold md:text-3xl;
+  }
+  h3 {
+    @apply text-xl font-bold md:text-2xl;
+  }
+  h4 {
+    @apply text-lg font-semibold;
+  }
 }
 
+@layer components {
+  .container {
+    @apply px-4 md:px-6 max-w-7xl mx-auto;
+  }
+  .btn-primary {
+    @apply bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded transition-colors;
+  }
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-100 text-emerald-600 border border-emerald-600 font-medium py-2 px-4 rounded transition-colors;
+  }
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-md;
+  }
+}

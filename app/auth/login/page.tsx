@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
+import { Eye, EyeOff, ArrowLeft } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,12 +14,16 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import SiteHeader from "@/components/site-header"
 import SiteFooter from "@/components/site-footer"
+import { useAuth } from "@/contexts/auth-context"
+import { signInWithoutVerification } from "@/lib/auth-helpers"
 
 export default function LoginPage() {
   const router = useRouter()
   const { toast } = useToast()
+  const { signIn } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
@@ -27,6 +31,7 @@ export default function LoginPage() {
     rememberMe: false,
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -43,37 +48,47 @@ export default function LoginPage() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null)
 
-    // Store authentication state in localStorage
-    localStorage.setItem('isAuthenticated', 'true')
-    localStorage.setItem('user', JSON.stringify({
-      name: "Messiah Hamilton",
-      email: formData.email
-    }))
-    
-    // Set default user mode if not already set
-    if (!localStorage.getItem('userMode')) {
-      localStorage.setItem('userMode', 'buyer')
+    try {
+      // Use context if available, otherwise use direct auth
+      if (signIn) {
+        const { error } = await signIn(formData.email, formData.password)
+
+        if (error) {
+          setError(error.message)
+          setIsSubmitting(false)
+          return
+        }
+      } else {
+        // Direct implementation as fallback
+        try {
+          await signInWithoutVerification(formData.email, formData.password)
+        } catch (err: any) {
+          setError(err.message || "Invalid email or password")
+          setIsSubmitting(false)
+          return
+        }
+      }
+
+      toast({
+        title: "Login successful!",
+        description: "Welcome back to ezyauction.tt",
+        variant: "default",
+      })
+
+      // Redirect to home page
+      setTimeout(() => {
+        router.push("/")
+      }, 1000)
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.")
+      console.error(err)
+      setIsSubmitting(false)
     }
-
-    // Create empty notifications array if not exists
-    if (!localStorage.getItem('notifications')) {
-      localStorage.setItem('notifications', JSON.stringify([]))
-    }
-
-    toast({
-      title: "Login successful!",
-      description: "Welcome back to ezyauction.tt",
-      variant: "default",
-    })
-
-    // Redirect to home page
-    setTimeout(() => {
-      router.push('/')
-    }, 1000)
   }
 
   return (
@@ -95,6 +110,12 @@ export default function LoginPage() {
               <CardDescription className="text-center">Enter your credentials to sign in</CardDescription>
             </CardHeader>
             <CardContent>
+              {error && (
+                <Alert variant="destructive" className="mb-4">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+              
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
@@ -140,11 +161,7 @@ export default function LoginPage() {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="rememberMe"
-                    checked={formData.rememberMe}
-                    onCheckedChange={handleCheckboxChange}
-                  />
+                  <Checkbox id="rememberMe" checked={formData.rememberMe} onCheckedChange={handleCheckboxChange} />
                   <Label htmlFor="rememberMe" className="text-sm font-normal">
                     Remember me
                   </Label>
@@ -172,7 +189,7 @@ export default function LoginPage() {
               </div>
 
               <div className="grid grid-cols-1 gap-4">
-                <Button variant="outline">
+                <Button variant="outline" type="button" onClick={() => alert("Google sign-in will be implemented soon!")}>
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                     <path
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -204,4 +221,3 @@ export default function LoginPage() {
     </div>
   )
 }
-
